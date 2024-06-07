@@ -60,7 +60,7 @@ router.get('/:userId', async (req, res) => {
         const response = {
             status: orderStatus,
             total: order.total,
-            discountedTotal: discountedTotal,
+            newTotal: discountedTotal,
             message: orderStatus === 'delivered' ? 'Your order has been delivered.' : `Your order is in progress. ${Math.ceil(timeLeft / (60 * 1000))} minutes left for delivery`,
             timeLeft: orderStatus === 'in progress' ? `${Math.ceil(timeLeft / (60 * 1000))} minutes` : undefined
         };

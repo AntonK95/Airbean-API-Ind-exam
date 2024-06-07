@@ -1,7 +1,7 @@
 
 function applyDiscount(total, userId, guestUserId) {
     if (userId !== guestUserId) {
-        total *= 0.10;
+        total *= 0.9;
     }
     return { total };
 }
