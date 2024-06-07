@@ -15,6 +15,7 @@ import orderHistoryRouter from './routes/orderhistory.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+export const menuDB = nedb.create({ filename: 'menu.db', autoload: true });
 export const database = nedb.create({ filename: 'users.db', autoload: true });
 export const db = nedb.create({ filename: 'cart.db', autoload: true });
 export const orderDB = nedb.create({ filename: 'order.db', autoload: true });
@@ -35,7 +36,27 @@ app.use('/order-history', orderHistoryRouter);
 
 app.use(errorHandlerMiddleware);
 
-// Starta server
-app.listen(PORT, (req, res) => {
-    console.log(`Server is running on port ${PORT}`);
-});
+
+// Om databasen är tom, skicka in denna data
+const seedDatabase = async () => {
+    const count = await menuDB.count({});
+    if(count === 0) {
+        const menuItems = [
+            { "id": 1, "title": "Bryggkaffe", "desc": "Bryggd på månadens bönor.", "price": 39 },
+            { "id": 2, "title": "Caffè Doppio", "desc": "Bryggd på månadens bönor.", "price": 49 },
+            { "id": 3, "title": "Cappuccino", "desc": "Bryggd på månadens bönor.", "price": 49 },
+            { "id": 4, "title": "Latte Macchiato", "desc": "Bryggd på månadens bönor.", "price": 49 },
+            { "id": 5, "title": "Kaffe Latte", "desc": "Bryggd på månadens bönor.", "price": 54 },
+            { "id": 6, "title": "Cortado", "desc": "Bryggd på månadens bönor.", "price": 39 }
+        ];
+        await menuDB.insert(menuItems);
+    }
+};
+
+seedDatabase().then(() => {
+    // Starta server
+    app.listen(PORT, (req, res) => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+
+})
