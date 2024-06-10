@@ -12,6 +12,7 @@ import confirmationRouter from './routes/confirmation.js';
 import logger from './middlewares/logger.js';
 import orderHistoryRouter from './routes/orderhistory.js';
 import addMenuItem from './routes/addMenuItem.js';
+import deleteMenuItem from './routes/deleteMenuItem.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -35,6 +36,7 @@ app.use('/info', info);
 app.use('/confirmation', confirmationRouter);
 app.use('/order-history', orderHistoryRouter);
 app.use('/add-to-menu', addMenuItem);
+app.use('/delete-from-menu', deleteMenuItem);
 
 app.use(errorHandlerMiddleware);
 
