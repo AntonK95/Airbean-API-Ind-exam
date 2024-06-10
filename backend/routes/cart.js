@@ -1,18 +1,13 @@
 import { Router } from 'express';
-import { readFileSync } from 'fs';
-import { db } from '../server.js';
+import { db, menuDB } from '../server.js';
 import Datastore from 'nedb-promises';
 import { validateUrl, urlSchema} from '../middlewares/validateUrl.js';
-
-const data = JSON.parse(readFileSync('./data/menu.json', 'utf8'));
-const products = data.menu;
 
 const router = Router();
 const usersDatabase = Datastore.create('users.db');
 const guestUserId = 'guest';
 
-const getProductFromMenu = id => products.find(item => item.id === Number(id));
-const getProductFromCart = async (userId, productId) => await db.findOne({ userId, productId });
+const getProductFromMenu = async (id) => await menuDB.findOne({ id: Number(id) });
 
 router.post('/add/:userId/:id', validateUrl(urlSchema), async (req, res) => {
     let { userId, id } = req.params;
@@ -32,8 +27,17 @@ router.post('/add/:userId/:id', validateUrl(urlSchema), async (req, res) => {
         return res.status(404).json({ error: 'Product not found in menu' });
     }
 
-    await db.insert({ userId, productId: id, title: product.title, desc: product.desc, price: product.price });
-    res.json({ message: 'Product added to cart', product });
+    const cartItem = { 
+        userId, 
+        productId: id, 
+        title: product.title, 
+        desc: product.desc, 
+        price: product.price 
+    };
+
+    await db.insert(cartItem);
+    res.json({ message: 'Product added to cart', cartItem });
+
 });
 
 router.delete('/remove/:userId/:id', validateUrl(urlSchema), async (req, res) => {
@@ -67,14 +71,27 @@ router.get('/', async (req, res) => {
 
     console.log('Hämta cart för userId:', userId);
 
-    const cart = await db.find({ userId });
-    console.log('Cart items:', cart);
+    const cartItems = await db.find({ userId });
+    console.log('Cart items:', cartItems);
 
-    if (cart.length === 0) {
+    // Logik för att fylla i saknade fält från `menuDB`
+    for (let item of cartItems) {
+        if (!item.title || !item.desc || !item.price) {
+            const product = await getProductFromMenu(item.productId);
+            if (product) {
+                item.title = product.title;
+                item.desc = product.desc;
+                item.price = Number(product.price); // Säkerställ att priset är ett nummer
+                await db.update({ _id: item._id }, { $set: item });
+            }
+        }
+    }
+
+    if (cartItems.length === 0) {
         return res.json({ message: 'Your cart is empty' });
     }
 
-    res.json(cart);
+    res.json(cartItems);
 });
 
 router.delete('/clear/:userId', async (req, res) => {

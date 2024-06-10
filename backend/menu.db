@@ -1,6 +1,7 @@
-{"id":5,"title":"Kaffe Latte","desc":"Bryggd på månadens bönor.","price":54,"_id":"8LZkLQeA2VgbTP9v"}
-{"id":2,"title":"Caffè Doppio","desc":"Bryggd på månadens bönor.","price":49,"_id":"KRDKEoFIOpSbpaUl"}
-{"id":4,"title":"Latte Macchiato","desc":"Bryggd på månadens bönor.","price":49,"_id":"NTwzsADlUPlX4Cvb"}
-{"id":6,"title":"Cortado","desc":"Bryggd på månadens bönor.","price":39,"_id":"WlCCn8wQsyPKZ1aU"}
-{"id":3,"title":"Cappuccino","desc":"Bryggd på månadens bönor.","price":49,"_id":"XvyAIVIUifSYrRcK"}
-{"id":1,"title":"Bryggkaffe","desc":"Bryggd på månadens bönor.","price":39,"_id":"hyWMDiTScMWNW6qf"}
+{"type":"counter","value":6,"_id":"9RCkYBQ0Bzv1Q7hW"}
+{"id":6,"title":"Cortado","desc":"Bryggd på månadens bönor.","price":39,"_id":"BvEDm2mj584iZEou"}
+{"id":4,"title":"Latte Macchiato","desc":"Bryggd på månadens bönor.","price":49,"_id":"NLCpcSyCh0KX2MLY"}
+{"id":5,"title":"Kaffe Latte","desc":"Bryggd på månadens bönor.","price":54,"_id":"S5WAp39EI0BjArIg"}
+{"id":2,"title":"Caffè Doppio","desc":"Bryggd på månadens bönor.","price":49,"_id":"XCIH3zT8YXkxxznt"}
+{"id":3,"title":"Cappuccino","desc":"Bryggd på månadens bönor.","price":49,"_id":"Z8dgKr1EN0D9WlCN"}
+{"id":1,"title":"Bryggkaffe","desc":"Bryggd på månadens bönor.","price":39,"_id":"k3wcqbOLPq70xVnP"}
