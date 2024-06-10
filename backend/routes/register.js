@@ -2,6 +2,7 @@ import { Router } from 'express';
 import userSchema from '../models/userModel.js';
 import { database } from '../server.js';
 import validate from '../middlewares/validate.js';
+import getTimeStamp from '../utilities/timeStamp.js';
 
 const router = Router();
 
@@ -21,7 +22,14 @@ router.post('/', validate(userSchema), async (req, res, next) => {
             userId = (Math.floor(1000 + Math.random() * 9000)).toString();
         } while (await database.findOne({ userId }));
 
-        const newUser = await database.insert({ username, password, email, role, userId });
+        const newUser = await database.insert({ 
+            username, 
+            password, 
+            email, 
+            role, 
+            userId,
+            createdAt: getTimeStamp() 
+        });
 
          // Logga datum och tid för registrering
          const now = new Date();

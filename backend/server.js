@@ -3,7 +3,7 @@ import menuRouter from './routes/menu.js';
 import nedb from 'nedb-promises';
 import registerRouter from './routes/register.js';
 import loginRouter from './routes/login.js';
-import updateUserRouter from './routes/update.js';
+import updateUserRouter from './routes/updateUser.js';
 import cartRouter from './routes/cart.js';
 import errorHandlerMiddleware from './middlewares/errorHandler.js'
 import orderRouter from './routes/order.js';
@@ -11,6 +11,7 @@ import info from './routes/info.js';
 import confirmationRouter from './routes/confirmation.js';
 import logger from './middlewares/logger.js';
 import orderHistoryRouter from './routes/orderhistory.js';
+import addMenuItem from './routes/addMenuItem.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -33,6 +34,7 @@ app.use('/order', orderRouter);
 app.use('/info', info);
 app.use('/confirmation', confirmationRouter);
 app.use('/order-history', orderHistoryRouter);
+app.use('/add-to-menu', addMenuItem);
 
 app.use(errorHandlerMiddleware);
 
@@ -50,6 +52,7 @@ const seedDatabase = async () => {
             { "id": 6, "title": "Cortado", "desc": "Bryggd på månadens bönor.", "price": 39 }
         ];
         await menuDB.insert(menuItems);
+        await menuDB.insert({ type: 'counter', value: 6 });
     }
 };
 
