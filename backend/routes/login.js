@@ -2,10 +2,11 @@ import { Router } from 'express';
 import loginSchema from '../models/loginModel.js';
 import { database } from '../server.js';
 import validate from '../middlewares/validate.js';
+import authUser from '../middlewares/authUser.js';
 
 const router = Router();
 
-router.post('/', validate(loginSchema), async (req, res, next) => {
+router.post('/', validate(loginSchema), authUser, async (req, res, next) => {
     try {
         const { error } = loginSchema.validate(req.body);
         
@@ -16,7 +17,9 @@ router.post('/', validate(loginSchema), async (req, res, next) => {
         const existingUser = await database.findOne({ username, password });
         if (!existingUser) return res.status(400).json({ message: 'Felaktig inlognings information' });
 
-        res.status(200).json({ message: `Du är inloggad!` });
+        const token = req.token;
+
+        res.status(200).json({ message: `Du är inloggad!`, token });
     } catch (err) {
         console.error(err);
         next(err);
