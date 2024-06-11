@@ -11,7 +11,8 @@
 ### {
 ###	"username": "username",
 ###	"password": "password",
-###	"email": "email@mail.com"
+###	"email": "email@email.com",
+### "role": "user/admin"
 ### }
 
 ### POST login - http://localhost:8080/login
@@ -45,3 +46,23 @@
 ### GET order history - http://localhost:8080/order-history/:userId
 
 ### Om man inte har ett konto och inte vill skapa ett - används 'guest' istället för userId# Airbean-API-Ind-exam
+
+### POST add item to menu - http://localhost:8080/add-to-menu
+### JSON Body:
+### {
+### "title": "Title",
+### "desc": "Description",
+### "price": Number(price)
+### }
+
+### DELETE item from menu - http://localhost:8080/delete-from-menu/:id
+
+### PUT update menu item - http://localhost:8080/update-menu-item
+### JSON Body:
+### {
+### "id": "id"
+### "title": "Title",
+### "desc": "Description",
+### "price": Number(price)
+### }
+
