@@ -16,6 +16,7 @@ import deleteMenuItem from './routes/deleteMenuItem.js';
 import updateMenuItem from './routes/updateMenuItem.js';
 import verifyToken from './middlewares/verifyToken.js';
 import checkAdmin from './middlewares/checkAdmin.js';
+import offersrouter from './routes/offers.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -25,6 +26,7 @@ export const database = nedb.create({ filename: 'users.db', autoload: true });
 export const db = nedb.create({ filename: 'cart.db', autoload: true });
 export const orderDB = nedb.create({ filename: 'order.db', autoload: true });
 export const orderNumberDB = nedb.create({ filename: 'orderNumber.db', autoload: true });
+export const offersDB = nedb.create({ filename: 'offers.db', autoload: true });
 
 app.use(express.json());
 app.use(logger); // Global logger middleware
@@ -41,6 +43,7 @@ app.use('/order-history', orderHistoryRouter);
 app.use('/add-to-menu', verifyToken, checkAdmin, addMenuItem);
 app.use('/delete-from-menu', verifyToken, checkAdmin, deleteMenuItem);
 app.use('/update-menu-item', verifyToken, checkAdmin, updateMenuItem);
+app.use('/offers', verifyToken, checkAdmin, offersrouter);
 
 app.use(errorHandlerMiddleware);
 
