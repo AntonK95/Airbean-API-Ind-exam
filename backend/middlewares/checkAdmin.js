@@ -1,4 +1,4 @@
-// Skapa en middleware för att kontrollera om användaren har rollen admin
+
 const checkAdmin = (req, res, next) => {
     // Kontrollera om användaren har rollen admin
     if (req.user.role !== 'admin') {
